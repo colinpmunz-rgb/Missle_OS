@@ -7,3 +7,8 @@ web-build/
 *.log
 ios/
 android/
+
+# Server build output
+server/node_modules/
+server/dist/
+server/.env
