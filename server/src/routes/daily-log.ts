@@ -36,7 +36,7 @@ async function recalcScores(userId: string, date: string) {
       if (log[f]) {
         const mapping = PILLAR_GAINS[f as string] ?? {};
         for (const [pillar, val] of Object.entries(mapping)) {
-          gains[pillar] += val;
+          gains[pillar] += val ?? 0;
         }
       }
     }
