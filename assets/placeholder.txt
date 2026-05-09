@@ -1,0 +1,10 @@
+Add the following assets to this directory before building:
+- icon.png (1024x1024 transparent PNG, app icon)
+- splash.png (2048x2048 PNG, splash screen image)
+- adaptive-icon.png (1024x1024 PNG, Android adaptive icon foreground)
+- favicon.png (32x32 PNG, web favicon)
+
+Primary color: #2D5A3A (forest green)
+Background: #F5F0E8 (bone)
+
+Remove this file before App Store submission.

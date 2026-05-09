@@ -1,0 +1,84 @@
+export const Colors = {
+  light: {
+    primary: '#2D5A3A',
+    accent: '#3d7a4f',
+    background: '#F5F0E8',
+    surface: '#EDE8DC',
+    text: '#1A1A18',
+    textMuted: '#6B6B65',
+    border: '#D4CFC3',
+    white: '#FFFFFF',
+    error: '#C0392B',
+    success: '#2D5A3A',
+    warning: '#B8860B',
+  },
+  dark: {
+    primary: '#3d7a4f',
+    accent: '#4d8a5f',
+    background: '#1A1A18',
+    surface: '#242420',
+    text: '#F5F0E8',
+    textMuted: '#9A9A94',
+    border: '#3A3A36',
+    white: '#FFFFFF',
+    error: '#E74C3C',
+    success: '#3d7a4f',
+    warning: '#D4A017',
+  },
+};
+
+export const CalendarTagColors = {
+  School: '#2563EB',
+  Test: '#DC2626',
+  Personal: '#16A34A',
+  Business: '#2D5A3A',
+  'Personal Time': '#F5F0E8',
+};
+
+export const Fonts = {
+  garamond: {
+    regular: 'EBGaramond_400Regular',
+    medium: 'EBGaramond_500Medium',
+    semiBold: 'EBGaramond_600SemiBold',
+    bold: 'EBGaramond_700Bold',
+    italic: 'EBGaramond_400Regular_Italic',
+  },
+  inter: {
+    regular: 'Inter_400Regular',
+    medium: 'Inter_500Medium',
+    semiBold: 'Inter_600SemiBold',
+    bold: 'Inter_700Bold',
+  },
+};
+
+export const Spacing = {
+  xs: 4,
+  sm: 8,
+  md: 16,
+  lg: 24,
+  xl: 32,
+  xxl: 48,
+};
+
+export const Radius = {
+  none: 0,
+  sm: 2,
+  md: 4,
+  lg: 6,
+};
+
+export const Typography = {
+  displayLarge: { fontSize: 32, fontFamily: Fonts.garamond.bold, lineHeight: 40 },
+  displayMedium: { fontSize: 26, fontFamily: Fonts.garamond.bold, lineHeight: 34 },
+  displaySmall: { fontSize: 22, fontFamily: Fonts.garamond.semiBold, lineHeight: 30 },
+  headingLarge: { fontSize: 20, fontFamily: Fonts.garamond.semiBold, lineHeight: 28 },
+  headingMedium: { fontSize: 18, fontFamily: Fonts.garamond.medium, lineHeight: 26 },
+  headingSmall: { fontSize: 16, fontFamily: Fonts.garamond.medium, lineHeight: 24 },
+  bodyLarge: { fontSize: 16, fontFamily: Fonts.inter.regular, lineHeight: 24 },
+  bodyMedium: { fontSize: 14, fontFamily: Fonts.inter.regular, lineHeight: 22 },
+  bodySmall: { fontSize: 12, fontFamily: Fonts.inter.regular, lineHeight: 18 },
+  labelLarge: { fontSize: 14, fontFamily: Fonts.inter.semiBold, lineHeight: 20 },
+  labelMedium: { fontSize: 12, fontFamily: Fonts.inter.medium, lineHeight: 18 },
+  labelSmall: { fontSize: 10, fontFamily: Fonts.inter.medium, lineHeight: 16 },
+  mono: { fontSize: 14, fontFamily: Fonts.inter.regular, lineHeight: 22 },
+};
