@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Stack, useRouter, useSegments } from 'expo-router';
-import { useColorScheme } from 'react-native';
+import { Platform, useColorScheme } from 'react-native';
 import { SplashScreen } from 'expo-splash-screen';
 import { ClerkProvider, useAuth } from '@clerk/expo';
 import * as SecureStore from 'expo-secure-store';
@@ -22,7 +22,9 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { requestNotificationPermissions, scheduleDailyNotifications } from '../lib/notifications';
 import { UpdateBanner } from '../components/ui/UpdateBanner';
 
-SplashScreen.preventAutoHideAsync();
+if (Platform.OS !== 'web') {
+  SplashScreen.preventAutoHideAsync();
+}
 
 const tokenCache = {
   async getToken(key: string) { return SecureStore.getItemAsync(key); },
@@ -46,24 +48,24 @@ function AuthGate() {
 }
 
 function AppContent() {
-  const scheme = useColorScheme();
-  const [fontsLoaded] = useFonts({
+  const [fontsLoaded, fontError] = useFonts({
     EBGaramond_400Regular, EBGaramond_500Medium, EBGaramond_600SemiBold,
     EBGaramond_700Bold, EBGaramond_400Regular_Italic,
     Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold,
   });
 
   useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync();
+    if (!fontsLoaded && !fontError) return;
+    if (Platform.OS !== 'web') {
+      SplashScreen.hideAsync().catch(() => {});
       (async () => {
         const granted = await requestNotificationPermissions();
         if (granted) await scheduleDailyNotifications();
       })();
     }
-  }, [fontsLoaded]);
+  }, [fontsLoaded, fontError]);
 
-  if (!fontsLoaded) return null;
+  if (!fontsLoaded && !fontError) return null;
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
