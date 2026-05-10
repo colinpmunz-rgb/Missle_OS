@@ -1,8 +1,11 @@
 import 'dotenv/config';
 import { serve } from '@hono/node-server';
+import { serveStatic } from '@hono/node-server/serve-static';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
+import { readFile } from 'fs/promises';
+import { join } from 'path';
 import { requireAuth } from './middleware/auth.js';
 import dailyLogRouter from './routes/daily-log.js';
 import pillarScoresRouter from './routes/pillar-scores.js';
@@ -36,6 +39,19 @@ app.route('/api/goals', goalsRouter);
 app.route('/api/calendar', calendarRouter);
 app.route('/api/word-of-day', wordOfDayRouter);
 app.route('/api/brand-ops', brandOpsRouter);
+
+// Serve static web app
+app.use('/*', serveStatic({ root: './public' }));
+
+// SPA fallback — serve index.html for all non-API routes
+app.get('*', async (c) => {
+  try {
+    const html = await readFile(join(process.cwd(), 'public', 'index.html'), 'utf-8');
+    return c.html(html);
+  } catch {
+    return c.text('Not found', 404);
+  }
+});
 
 const port = parseInt(process.env.PORT ?? '3000');
 console.log(`Missile OS API running on port ${port}`);
