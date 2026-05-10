@@ -4,8 +4,12 @@ import { serveStatic } from '@hono/node-server/serve-static';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
-import { readFile } from 'fs/promises';
-import { join } from 'path';
+import { readFile, access } from 'fs/promises';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const PUBLIC_DIR = join(__dirname, '..', 'public');
 import { requireAuth } from './middleware/auth.js';
 import dailyLogRouter from './routes/daily-log.js';
 import pillarScoresRouter from './routes/pillar-scores.js';
@@ -41,12 +45,12 @@ app.route('/api/word-of-day', wordOfDayRouter);
 app.route('/api/brand-ops', brandOpsRouter);
 
 // Serve static web app
-app.use('/*', serveStatic({ root: './public' }));
+app.use('/*', serveStatic({ root: PUBLIC_DIR }));
 
 // SPA fallback — serve index.html for all non-API routes
 app.get('*', async (c) => {
   try {
-    const html = await readFile(join(process.cwd(), 'public', 'index.html'), 'utf-8');
+    const html = await readFile(join(PUBLIC_DIR, 'index.html'), 'utf-8');
     return c.html(html);
   } catch {
     return c.text('Not found', 404);
