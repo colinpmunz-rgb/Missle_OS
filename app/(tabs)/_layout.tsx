@@ -23,7 +23,7 @@ function WebTopNav() {
 
   return (
     <View style={[styles.webNav, { backgroundColor: C.surface, borderBottomColor: C.border }]}>
-      <Txt variant="headingMedium" color={C.primary} style={styles.logo}>Missile OS</Txt>
+      <Txt variant="headingMedium" color={C.primary} style={styles.logo}>M.I.S.S.L.E. OS</Txt>
       <View style={styles.webTabs}>
         {TABS.map(tab => {
           const active = tab.name === 'index'

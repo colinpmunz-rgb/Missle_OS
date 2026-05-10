@@ -45,7 +45,7 @@ export default function LoginScreen() {
       <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
       <View style={styles.inner}>
         <View style={styles.header}>
-          <Txt variant="displayLarge" color={C.primary}>Missile OS</Txt>
+          <Txt variant="displayLarge" color={C.primary}>M.I.S.S.L.E. OS</Txt>
           <Txt variant="bodyMedium" color={C.textMuted} style={{ marginTop: 6 }}>
             Personal operating system
           </Txt>

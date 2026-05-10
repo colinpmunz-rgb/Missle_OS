@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { format } from 'date-fns';
-import { useAuth } from '@clerk/expo';
 import { Screen } from '../../components/ui/Screen';
 import { Txt } from '../../components/ui/Typography';
+import { Card } from '../../components/ui/Card';
+import { DayRing } from '../../components/home/DayRing';
+import { TodoList } from '../../components/home/TodoList';
 import { DailyChecklist } from '../../components/home/DailyChecklist';
 import { PillarChart } from '../../components/home/PillarChart';
-import { GoalTracker } from '../../components/home/GoalTracker';
 import { WordCard } from '../../components/home/WordCard';
 import { BodyBattery } from '../../components/home/BodyBattery';
 import { HydrationRing } from '../../components/home/HydrationRing';
@@ -15,7 +16,6 @@ import { usePillarScores } from '../../hooks/usePillarScores';
 import { useGarmin } from '../../hooks/useGarmin';
 import { useNutrition } from '../../hooks/useNutrition';
 import { useWordOfDay } from '../../hooks/useWordOfDay';
-import { useGoals } from '../../hooks/useGoals';
 import { Spacing } from '../../constants/theme';
 
 const HYDRATION_TARGET = 100;
@@ -26,29 +26,43 @@ export default function HomeScreen() {
   const { data: garmin } = useGarmin();
   const { data: nutrition } = useNutrition();
   const { today: word } = useWordOfDay();
-  const { goals } = useGoals();
 
   return (
     <Screen>
-      <View style={styles.dateRow}>
-        <Txt variant="displaySmall">Home</Txt>
-        <Txt variant="bodyMedium" style={{ opacity: 0.5 }}>
-          {format(new Date(), 'EEEE, MMMM d')}
+      <Card glass style={{ marginBottom: Spacing.md }}>
+        <DayRing />
+      </Card>
+
+      <TodoList />
+
+      <View style={{ height: Spacing.md }} />
+
+      <Card glass style={{ marginBottom: Spacing.md }}>
+        <Txt variant="labelSmall" style={{ letterSpacing: 2, marginBottom: Spacing.sm }}>
+          {format(new Date(), 'EEEE, MMMM d').toUpperCase()}
         </Txt>
+        <DailyChecklist log={log} loading={loading} onToggle={toggle} />
+      </Card>
+
+      <View style={styles.row}>
+        <View style={{ flex: 1 }}>
+          <Card glass>
+            <BodyBattery garmin={garmin} />
+          </Card>
+        </View>
+        <View style={{ flex: 1 }}>
+          <Card glass>
+            <HydrationRing oz={Number(nutrition?.hydration_oz ?? 0)} target={HYDRATION_TARGET} />
+          </Card>
+        </View>
       </View>
 
-      <DailyChecklist log={log} loading={loading} onToggle={toggle} />
-
-      <View style={styles.snapRow}>
-        <BodyBattery garmin={garmin} />
-        <HydrationRing oz={Number(nutrition?.hydration_oz ?? 0)} target={HYDRATION_TARGET} />
-      </View>
-
-      <PillarChart latest={latest} />
+      <View style={{ height: Spacing.md }} />
+      <Card glass style={{ marginBottom: Spacing.md }}>
+        <PillarChart latest={latest} />
+      </Card>
 
       <WordCard word={word} />
-
-      <GoalTracker goals={goals} />
 
       <View style={{ height: Spacing.xl }} />
     </Screen>
@@ -56,6 +70,5 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  dateRow: { marginBottom: Spacing.md, gap: 2 },
-  snapRow: { flexDirection: 'row', gap: Spacing.md, marginTop: Spacing.md, marginBottom: Spacing.md },
+  row: { flexDirection: 'row', gap: Spacing.md, marginBottom: Spacing.md },
 });
