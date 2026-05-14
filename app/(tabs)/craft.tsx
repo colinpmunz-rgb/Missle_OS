@@ -6,22 +6,20 @@ import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Divider } from '../../components/ui/Divider';
-import { useAuth } from '../../hooks/useAuth';
 import { useGoals } from '../../hooks/useGoals';
 import { useBrandOperations } from '../../hooks/useBrandOperations';
 import { Colors, Spacing } from '../../constants/theme';
-import type { BrandOperation, Goal } from '../../constants/types';
+import type { BrandOperation } from '../../constants/types';
 import { format } from 'date-fns';
 
 const PIPELINE_STAGES: BrandOperation['pipeline_stage'][] = ['idea', 'in_progress', 'scheduled', 'published'];
 const STAGE_LABELS: Record<string, string> = { idea: 'Idea', in_progress: 'In Progress', scheduled: 'Scheduled', published: 'Published' };
 
 export default function CraftScreen() {
-  const { userId } = useAuth();
   const scheme = useColorScheme();
   const C = Colors[scheme ?? 'light'];
-  const { goals, create: createGoal, update: updateGoal, remove: removeGoal } = useGoals(userId, 'craft');
-  const { items, create: createBrand, update: updateBrand, remove: removeBrand, byStage } = useBrandOperations(userId);
+  const { goals, create: createGoal, update: updateGoal, remove: removeGoal } = useGoals('craft');
+  const { create: createBrand, remove: removeBrand, byStage } = useBrandOperations();
 
   const [showGoalModal, setShowGoalModal] = useState(false);
   const [goalForm, setGoalForm] = useState({ title: '', deadline: '' });

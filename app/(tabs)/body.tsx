@@ -7,7 +7,6 @@ import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Divider } from '../../components/ui/Divider';
 import { Toggle } from '../../components/ui/Toggle';
-import { useAuth } from '../../hooks/useAuth';
 import { useGarmin } from '../../hooks/useGarmin';
 import { useNutrition } from '../../hooks/useNutrition';
 import { useExerciseLog } from '../../hooks/useExerciseLog';
@@ -32,12 +31,11 @@ function recoveryColor(score: number, C: any): string {
 }
 
 export default function BodyScreen() {
-  const { userId } = useAuth();
   const scheme = useColorScheme();
   const C = Colors[scheme ?? 'light'];
-  const { data: garmin, save: saveGarmin } = useGarmin(userId);
-  const { data: nutrition, save: saveNutrition, addHydration } = useNutrition(userId);
-  const { todayLog, save: saveExercise } = useExerciseLog(userId);
+  const { data: garmin, save: saveGarmin } = useGarmin();
+  const { data: nutrition, save: saveNutrition, addHydration } = useNutrition();
+  const { todayLog, save: saveExercise } = useExerciseLog();
 
   const [showSleepModal, setShowSleepModal] = useState(false);
   const [showNutritionModal, setShowNutritionModal] = useState(false);

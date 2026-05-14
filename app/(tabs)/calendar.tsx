@@ -7,18 +7,15 @@ import { Card } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Divider } from '../../components/ui/Divider';
-import { useAuth } from '../../hooks/useAuth';
 import { useCalendarEvents } from '../../hooks/useCalendarEvents';
-import { useGarmin } from '../../hooks/useGarmin';
 import { Colors, Spacing, CalendarTagColors } from '../../constants/theme';
 import { CALENDAR_TAGS, type CalendarTag, type CalendarEvent } from '../../constants/types';
 import { format } from 'date-fns';
 
 export default function CalendarScreen() {
-  const { userId } = useAuth();
   const scheme = useColorScheme();
   const C = Colors[scheme ?? 'light'];
-  const { events, create, remove, eventsForDate } = useCalendarEvents(userId);
+  const { events, create, remove, eventsForDate } = useCalendarEvents();
 
   const [selected, setSelected] = useState(format(new Date(), 'yyyy-MM-dd'));
   const [showModal, setShowModal] = useState(false);

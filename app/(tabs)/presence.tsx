@@ -150,6 +150,7 @@ export default function PresenceScreen() {
                 </Pressable>
               ))}
             </View>
+            <Input label="Notes" value={brandForm.notes} onChangeText={v => setBrandForm(p => ({ ...p, notes: v }))} multiline style={{ marginTop: Spacing.sm }} />
             <View style={styles.modalBtns}>
               <Button label="Cancel" onPress={() => setShowBrandModal(false)} variant="secondary" />
               <Button label="Save" onPress={saveBrand} />
