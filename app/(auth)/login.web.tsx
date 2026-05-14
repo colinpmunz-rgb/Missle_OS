@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Pressable, StyleSheet, useColorScheme, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { useSignIn, useSignUp, useSSO } from '@clerk/expo';
+import { useSignIn, useSignUp, useClerk } from '@clerk/expo';
 import { Colors, Fonts, Spacing } from '../../constants/theme';
 import { Txt } from '../../components/ui/Typography';
 import { Input } from '../../components/ui/Input';
@@ -10,7 +10,7 @@ import { Button } from '../../components/ui/Button';
 export default function LoginScreen() {
   const { signIn, setActive: setActiveSignIn, isLoaded: signInLoaded } = useSignIn();
   const { signUp, setActive: setActiveSignUp, isLoaded: signUpLoaded } = useSignUp();
-  const { startSSOFlow } = useSSO();
+  const clerk = useClerk();
   const scheme = useColorScheme();
   const C = Colors[scheme ?? 'dark'];
   const isDark = scheme === 'dark';
@@ -26,9 +26,9 @@ export default function LoginScreen() {
   useEffect(() => {
     if (!signInLoaded) return;
     const params = new URLSearchParams(window.location.search);
-    if (params.has('__clerk_status')) {
+    if (params.has('__clerk_status') || params.has('__clerk_db_jwt')) {
       setLoading(true);
-      (signIn as any).handleRedirectCallback?.()
+      (clerk as any).handleRedirectCallback({ afterSignInUrl: '/', afterSignUpUrl: '/' })
         .catch(() => {})
         .finally(() => setLoading(false));
     }
@@ -69,21 +69,18 @@ export default function LoginScreen() {
   };
 
   const handleOAuth = async (strategy: 'oauth_google' | 'oauth_microsoft') => {
-    if (!signInLoaded) return;
+    if (!signInLoaded || !signIn) return;
     setLoading(true); setError('');
     try {
-      const redirectUrl = `${window.location.origin}/(auth)/login`;
-      const { createdSessionId, setActive } = await startSSOFlow({
+      await (signIn as any).authenticateWithRedirect({
         strategy,
-        redirectUrl,
-      } as any);
-      if (createdSessionId && setActive) {
-        await setActive({ session: createdSessionId });
-      }
+        redirectUrl: `${window.location.origin}/(auth)/login`,
+        redirectUrlComplete: window.location.origin,
+      });
     } catch (e: any) {
       setError(e.errors?.[0]?.message ?? e.message ?? 'OAuth failed.');
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const switchMode = (next: 'signin' | 'signup') => {

@@ -14,13 +14,13 @@ const AWAKE_DUR = AWAKE_END - AWAKE_START;
 type Phase = 'PAST BEDTIME' | 'SLEEPING' | 'MORNING' | 'MIDDAY' | 'AFTERNOON' | 'EVENING' | 'BEDTIME';
 
 const PHASE_COLORS: Record<Phase, string> = {
-  'PAST BEDTIME': '#6B5B4E',
-  SLEEPING:       '#4A4A46',
-  MORNING:        '#E8B86A',
-  MIDDAY:         '#E07658',
-  AFTERNOON:      '#C4503A',
-  EVENING:        '#9B6BB5',
-  BEDTIME:        '#3d7a4f',
+  'PAST BEDTIME': '#1E1E1E',
+  SLEEPING:       '#252525',
+  MORNING:        '#6B8FAB',
+  MIDDAY:         '#8BAABB',
+  AFTERNOON:      '#7A90A0',
+  EVENING:        '#4A6070',
+  BEDTIME:        '#2A3A48',
 };
 
 function getInfo(now: Date): {

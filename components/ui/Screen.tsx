@@ -18,7 +18,7 @@ export function Screen({ children, scrollable = true, padded = true }: ScreenPro
 
   const webOverlay = Platform.OS === 'web' && isDark ? ({
     backgroundImage: [
-      'radial-gradient(ellipse 110% 45% at 50% 0%, rgba(224,118,88,0.13) 0%, transparent 60%)',
+      'radial-gradient(ellipse 100% 40% at 50% 0%, rgba(20,35,55,0.35) 0%, transparent 65%)',
       'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.75\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3CfeColorMatrix type=\'saturate\' values=\'0\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\' opacity=\'0.035\'/%3E%3C/svg%3E")',
     ].join(', '),
   } as any) : {};

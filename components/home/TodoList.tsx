@@ -5,8 +5,8 @@ import {
 import { Colors, Fonts, Spacing } from '../../constants/theme';
 import { useTodoList, Goal } from '../../hooks/useTodoList';
 
-const ORANGE = '#E07658';
-const GREEN = '#4a9e68';
+const ORANGE = '#B87840';
+const GREEN = '#2A4A35';
 
 function SegBar({ done, total }: { done: number; total: number }) {
   if (total === 0) return null;
